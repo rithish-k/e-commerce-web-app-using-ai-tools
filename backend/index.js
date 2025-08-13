@@ -1,38 +1,37 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
+const signupModel = require('./models/signup')
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // To parse JSON bodies
+app.use(express.json()); // To parse JSON bodies from frontend to backend
 
-const users = []; // Temporary in-memory user storage
-
-// Signup route
-app.post('/api/signup', (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    return res.status(400).json({ message: 'Username and password required' });
-  }
-  const userExists = users.find(u => u.username === username);
-  if (userExists) {
-    return res.status(400).json({ message: 'User already exists' });
-  }
-  users.push({ username, password });
-  res.status(201).json({ message: 'User created' });
-});
-
-// Login route
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username && u.password === password);
-  if (!user) {
-    return res.status(401).json({ message: 'Invalid credentials' });
-  }
-  res.json({ message: 'Login successful' });
-});
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+mongoose.connect("mongodb+srv://Rithish:Rithish@cluster0.vrefyx6.mongodb.net/signup?retryWrites=true&w=majority&appName=Cluster0")
+app.post("/login",(req,res)=> {
+  const{email, password}=req.body;
+  signupModel.findOne({email: email})
+  .then(user => {
+    if(user) {
+      if(user.password === password){
+        res.json("Success")
+      }
+      else{
+        res.json("the password is incorrect")
+      }
+    }
+    else{
+      res.json("No record found")
+    }
+  })
+})
+app.post('/register',(req,res)=>{
+  console.log(req.body)
+  signupModel.create(req.body)
+    .then(signupinfo =>res.json(signupinfo))
+    .catch(err=>res.status(500).json(err))
+})
+app.listen(3001,()=>{ 
+  console.log("server is running")
+})

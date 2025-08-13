@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 function SignupForm()
 {
     const [name,setName] = useState()
     const [email,setEmail] = useState()
     const [password,setPassword] = useState()
+    const navigate = useNavigate()
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('',{name,email,password})
+        console.log({ name, email, password });
+        axios.post('http://localhost:3001/register',{name,email,password})
         .then(result => console.log(result))
         .catch(err => console.log(err))
+        navigate('/login')
 
     }
     return(
@@ -22,7 +26,7 @@ function SignupForm()
                         <label htmlFor='name' className='form-label'>
                             <strong>Name</strong>
                         </label>
-                        <input type='text' placeholder='Enter Name' autoComplete='off' name='email' className='form-control rounded-0' onChange={(e) => setName(e.target.value)}></input>
+                        <input type='text' placeholder='Enter Name' autoComplete='off' name='name' className='form-control rounded-0' onChange={(e) => setName(e.target.value)}></input>
                     </div>
                     <div className='mb-3'>
                         <label htmlFor='email' className='form-label'>
