@@ -32,6 +32,6 @@ app.post('/register',(req,res)=>{
     .then(signupinfo =>res.json(signupinfo))
     .catch(err=>res.status(500).json(err))
 })
-app.listen(3002,()=>{ 
+app.listen(3003,()=>{ 
   console.log("server is running")
 })

@@ -12,7 +12,7 @@ function SignupForm()
     //     e.preventDefault()
     //     console.log("Starting form submission...");
     //     console.log({ name, email, password });
-    //     axios.post('http://localhost:3001/register',{name,email,password})
+    //     axios.post('http://localhost:3002/register',{name,email,password})
     //     .then(result =>{
     //         console.log(result)
     //         navigate('/login')
@@ -22,15 +22,8 @@ function SignupForm()
     const handleSubmit = (e) => {
     console.log("=== HANDLESUBMIT CALLED ===");
     e.preventDefault();
-    console.log("=== PREVENTED DEFAULT ===");
-    console.log("Starting form submission...");
-    console.log({ name, email, password });
     
-    console.log("=== ABOUT TO MAKE AXIOS CALL ===");
-    console.log("URL:", 'http://localhost:3001/register');
-    console.log("Data:", {name, email, password});
-    
-    axios.post('http://localhost:3002/register', {name, email, password})
+    axios.post('http://localhost:3003/register', {name, email, password})
     .then(result => {
         console.log("=== AXIOS SUCCESS ===");
         console.log("✅ Registration successful:", result);
