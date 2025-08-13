@@ -10,7 +10,7 @@ function LoginForm(){
         const handleSubmit = (e) => {
             e.preventDefault()
             console.log({email, password });
-            axios.post('http://localhost:3001/login',{email,password})
+            axios.post('http://localhost:3002/login',{email,password})
             .then(result => {
                 console.log(result)
                 if(result.data === "Success"){

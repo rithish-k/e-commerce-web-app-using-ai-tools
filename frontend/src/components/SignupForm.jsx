@@ -4,19 +4,45 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 function SignupForm()
 {
-    const [name,setName] = useState()
-    const [email,setEmail] = useState()
-    const [password,setPassword] = useState()
+    const [name,setName] = useState('')
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
     const navigate = useNavigate()
+    // const handleSubmit = (e) => {
+    //     e.preventDefault()
+    //     console.log("Starting form submission...");
+    //     console.log({ name, email, password });
+    //     axios.post('http://localhost:3001/register',{name,email,password})
+    //     .then(result =>{
+    //         console.log(result)
+    //         navigate('/login')
+    //     })
+    //     .catch(err => console.log(err))
+    // }
     const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log({ name, email, password });
-        axios.post('http://localhost:3001/register',{name,email,password})
-        .then(result => console.log(result))
-        .catch(err => console.log(err))
-        navigate('/login')
-
-    }
+    console.log("=== HANDLESUBMIT CALLED ===");
+    e.preventDefault();
+    console.log("=== PREVENTED DEFAULT ===");
+    console.log("Starting form submission...");
+    console.log({ name, email, password });
+    
+    console.log("=== ABOUT TO MAKE AXIOS CALL ===");
+    console.log("URL:", 'http://localhost:3001/register');
+    console.log("Data:", {name, email, password});
+    
+    axios.post('http://localhost:3002/register', {name, email, password})
+    .then(result => {
+        console.log("=== AXIOS SUCCESS ===");
+        console.log("✅ Registration successful:", result);
+        console.log("✅ User data saved:", result.data);
+        navigate('/login');
+    })
+    .catch(err => {
+        console.log("=== AXIOS ERROR ===");
+        console.log("❌ Registration failed:", err);
+        console.log("❌ Error details:", err.response?.data || err.message);
+    })
+}
     return(
         <div className='d-flex justify-content-center align-items-center bg-light vh-100'>
             <div className='bg-white p-3 "shadow-sm" rounded w-25'>
