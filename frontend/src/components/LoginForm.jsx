@@ -10,11 +10,11 @@ function LoginForm(){
         const handleSubmit = (e) => {
             e.preventDefault()
             console.log({email, password });
-            axios.post('http://localhost:3003/login',{email,password})
+            axios.post('http://localhost:4000/api/v1/signup/login',{email,password})
             .then(result => {
                 console.log(result)
                 if(result.data === "Success"){
-                    navigate('/home')
+                    navigate('/main')
                 }
             })
             .catch(err => console.log(err))

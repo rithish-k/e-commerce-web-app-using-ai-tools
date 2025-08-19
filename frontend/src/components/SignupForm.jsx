@@ -23,7 +23,7 @@ function SignupForm()
     console.log("=== HANDLESUBMIT CALLED ===");
     e.preventDefault();
     
-    axios.post('http://localhost:3003/register', {name, email, password})
+    axios.post('http://localhost:4000/api/v1/signup/register', {name, email, password})
     .then(result => {
         console.log("=== AXIOS SUCCESS ===");
         console.log("✅ Registration successful:", result);
