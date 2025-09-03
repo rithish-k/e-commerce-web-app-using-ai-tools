@@ -1,30 +1,37 @@
-const signupModel = require('../models/signup')
+const ErrorHandler = require("../utils/errorhandler");
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const signupModel = require('../models/signup');
+const sendToken = require("../utils/jwttoken");
+
+
 // require('dotenv').config();
-exports.logincheck = (req,res)=>{
-    const{email, password}=req.body;
-    signupModel.findOne({email: email})
-    .then(user => {
-        if(user) {
-        if(user.password === password){
-            res.json("Success")
-        }
-        else{
-            res.json("the password is incorrect")
-        }
-        }
-        else{
-        res.json("No record found")
+exports.registerUser = catchAsyncErrors( async(req,res,next)=>{
+    const {name,email,password}=req.body;
+    const user = await signupModel.create({
+        name,email,password,
+        avatar:{
+            public_id:"This is a sample id",
+            url:"ProfilePicUrl"
         }
     })
-    .catch(err => res.status(500).json({ error: err.message }));
+    sendToken(user,201,res);
+});
 
 
-}
+exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
+    const{email,password}=req.body;
+    if(!email || !password){
+        return next(new ErrorHandler("Please enter Email and password",400));
+    }
+    const user = await signupModel.findOne({email}).select("+password");
+    if(!user){
+        return next(new ErrorHandler("Invalid email or password",401));
+    }
+    const isPasswordMatched = await user.comparePassword(password);
+    if(!isPasswordMatched){
+        return next(new ErrorHandler("Invalid email or password",401));
+    }
+    sendToken(user,200,res);
 
-exports.getregistrationDetails = (req,res) =>{
-    console.log(req.body)
-    signupModel.create(req.body)
-        .then(signupinfo =>res.json(signupinfo))
-        .catch(err=>res.status(500).json(err))
-
-}
+})
+    

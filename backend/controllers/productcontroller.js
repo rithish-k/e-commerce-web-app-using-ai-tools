@@ -14,7 +14,9 @@ exports.createProduct = catchAsyncErrors(async (req,res,next)=>{
 });
 //Get ALL Products
 exports.getAllProducts= catchAsyncErrors(async (req,res)=>{
-    const apiFeature = new ApiFeatures(Product.find(),req.query).search().filter();
+    const resultPerpage = 5;
+    const productCount = await Product.countDocuments();
+    const apiFeature = new ApiFeatures(Product.find(),req.query).search().filter().pagination(resultPerpage);
     const products = await apiFeature.query;
     res.status(200).json({
         success:true,
@@ -34,6 +36,7 @@ exports.updateProduct = catchAsyncErrors(async(req,res)=>{
 
     })
 });
+//delete product -- admin
 exports.deleteProduct = catchAsyncErrors(async(req,res)=>{
     const product = await Product.findById(req.params.id);
     if(!product){
@@ -55,6 +58,7 @@ exports.getProductdetails = catchAsyncErrors(async(req,res,next)=>{
 
     res.status(200).json({
         success:true,
-        product
+        product,
+        productCount
     })
 });
