@@ -164,3 +164,57 @@ exports.updateProfile = catchAsyncErrors(async(req,res,next)=>{
     })
 
 })
+//admin to get all user details
+exports.getAllUser = catchAsyncErrors(async(req,res,next)=>{
+    const user = await signupModel.find();
+    if(!user){
+        return next(new ErrorHandler(`Users not found`));
+    }
+    res.status(200).json({
+        success:true,
+        user,
+    }) 
+})
+//admin get single user
+exports.getSingleUser = catchAsyncErrors(async(req,res,next)=>{
+    const user = await signupModel.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandler(`User does exist with id ${req.params.id}`));
+    }
+    res.status(200).json({
+        success:true,
+        user,
+    }) 
+})
+//admin to update roles of the user
+exports.updateUserRole = catchAsyncErrors(async(req,res,next)=>{
+    const newUserData = {
+        name:req.body.name,
+        email:req.body.email,
+        role:req.body.role,
+    }
+    const user = await signupModel.findByIdAndUpdate(req.params.id,newUserData,{
+        new:true,
+        runValidators:true,
+        useFindAndModify:false,
+
+    })
+    res.status(200).json({
+        success:true,
+    })
+
+})
+//delete user for admin
+exports.deleteUser = catchAsyncErrors(async(req,res,next)=>{
+    const user = await signupModel.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandler(`User doesnot exist with id ${req.params.id}`));
+    }
+    await user.deleteOne();
+    res.status(200).json({
+        success:true,
+        message:"User deleted sucessfully"
+        
+    })
+
+})

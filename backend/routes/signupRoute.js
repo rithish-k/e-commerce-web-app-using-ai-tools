@@ -1,5 +1,5 @@
 const express = require('express');
-const {loginUser, registerUser, logout, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile,} = require("../controllers/SignUpcontroller")
+const {loginUser, registerUser, logout, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, getAllUser, getSingleUser, updateUserRole, deleteUser,} = require("../controllers/SignUpcontroller")
 const {isAuthenticatedUser, authorizeRoles,} =require("../middleware/auth")
 // require('dotenv').config();
 const router = express.Router()
@@ -11,4 +11,6 @@ router.route("/logout").get(logout)
 router.route("/me").get(isAuthenticatedUser,getUserDetails)
 router.route("/password/update").put(isAuthenticatedUser,updatePassword)
 router.route("/me/update").put(isAuthenticatedUser,updateProfile)
+router.route("/admin/users").get(isAuthenticatedUser,authorizeRoles("admin"),getAllUser)
+router.route("/admin/users/:id").get(isAuthenticatedUser,authorizeRoles("admin"),getSingleUser).put(isAuthenticatedUser,authorizeRoles("admin"),updateUserRole).delete(isAuthenticatedUser,authorizeRoles("admin"),deleteUser)
 module.exports=router
