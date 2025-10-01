@@ -166,13 +166,13 @@ exports.updateProfile = catchAsyncErrors(async(req,res,next)=>{
 })
 //admin to get all user details
 exports.getAllUser = catchAsyncErrors(async(req,res,next)=>{
-    const user = await signupModel.find();
-    if(!user){
-        return next(new ErrorHandler(`Users not found`));
+    const users = await signupModel.find();
+    if(users.length === 0){
+        return next(new ErrorHandler("Users not found",404));
     }
     res.status(200).json({
         success:true,
-        user,
+        users,
     }) 
 })
 //admin get single user
