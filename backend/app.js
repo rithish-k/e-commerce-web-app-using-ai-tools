@@ -12,6 +12,8 @@ const product = require("./routes/productRoute");
 app.use("/api/v1/pro",product);
 const signup = require("./routes/signupRoute");
 app.use("/api/v1/signup",signup);
+const order = require("./routes/orderRoute");
+app.use("/api/v1",order);
 
 app.use(errorMiddleware);
 
