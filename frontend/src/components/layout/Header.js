@@ -14,7 +14,45 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
+import logo from "../../assets/logo.png";
+import { styled, alpha } from "@mui/material/styles";
+import Badge from "@mui/material/Badge";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: theme.spacing(3),
+  width: "auto",
+  display: "flex",
+  alignItems: "center",
+  padding: "0 8px",
+}));
+
+const SearchIconWrapper = styled("div")(() => ({
+  paddingRight: "8px",
+  display: "flex",
+  alignItems: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    width: "15ch",
+    transition: theme.transitions.create("width"),
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -34,10 +72,10 @@ const Header = () => {
     {/* Top Navbar */}
       <AppBar
         position="fixed"
-        color="transparent"
+        color="primary"
         elevation={0}
         sx={{
-          backdropFilter: "blur(10px)",
+          // backdropFilter: "blur(10px)",
           backgroundColor: "hsl(51, 54%, 3%)",
           color: "hsl(100, 100%, 99%)",
           px: 2,
@@ -45,18 +83,43 @@ const Header = () => {
       >
         <Toolbar>
           {/* Left - Logo */}
-          <Typography
-            variant="h6"
+
+          <Box
+            component={Link}
+            to="/"
             sx={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+              color: "inherit",
               flexGrow: 1,
-              fontWeight: "bold",
-              letterSpacing: 1,
-              color:"hsl(100, 100%, 99%)",
-              "&:hover":{color : "hsl(17, 87%, 54%)"},
             }}
           >
-            shopsimp
-          </Typography>
+            <Box
+              component="img"
+              src={logo}
+              alt="shopsimp logo"
+              sx={{
+                height: 40,
+                width: 40,
+                mr: 1.5,
+                borderRadius: "8px",
+                objectFit: "contain",
+              }}
+            />
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                letterSpacing: 1,
+                color: "hsl(100, 100%, 99%)",
+                "&:hover": { color: "hsl(17, 87%, 54%)" },
+              }}
+            >
+              shopsimp
+            </Typography>
+          </Box>
+          
 
           {/* Desktop Links */}
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
@@ -65,11 +128,32 @@ const Header = () => {
                 key={link.label}
                 component={Link}
                 to={link.path}
-                sx={{ textTransform: "none", fontSize: "1rem",color:"hsl(100, 100%, 99%)","&:hover":{color : "hsl(17, 87%, 54%)"} }}
+                sx={{ textTransform: "none", fontSize: "1rem",color:"hsl(100, 100%, 99%)","&:hover":{color : "hsla(17, 87%, 54%, 1.00)"} }}
               >
                 {link.label}
               </Button>
             ))}
+          </Box>
+          {/* 🔍 Search Bar (Desktop only) */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, ml: 3 }}>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
+            </Search>
+          </Box>
+
+          {/* 🛒 Cart & 👤 Profile Icons */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, ml: 2, gap: 1 }}>
+            <IconButton color="inherit" component={Link} to="/cart">
+              <Badge badgeContent={2} color="error">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+            <IconButton color="inherit" component={Link} to="/profile">
+              <AccountCircleIcon />
+            </IconButton>
           </Box>
 
           {/* Mobile Menu Icon */}
@@ -127,6 +211,16 @@ const Header = () => {
               <ListItemText primary={link.label} />
             </ListItem>
           ))}
+          <Box sx={{ mt: 4, display: "flex", gap: 3 }}>
+            <IconButton color="inherit" component={Link} to="/cart">
+              <Badge badgeContent={2} color="error">
+                <ShoppingCartIcon sx={{ color: "hsl(51, 54%, 3%)" }} />
+              </Badge>
+            </IconButton>
+            <IconButton color="inherit" component={Link} to="/profile">
+              <AccountCircleIcon sx={{ color: "hsl(51, 54%, 3%)" }} />
+            </IconButton>
+          </Box>
         </List>
       </Drawer>
 

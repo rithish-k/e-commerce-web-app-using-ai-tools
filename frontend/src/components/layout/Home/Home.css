@@ -1,0 +1,212 @@
+/* .banner{
+    background-image: linear-gradient(to right,#F0652D,#862E09) ;
+    height:100vmin;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    align-items:center;
+    justify-content:center;
+    color:#FDFFFC;
+}
+
+.banner > h1 {
+    margin:5vmax;
+    font:600 2.5vmax "Roboto";
+}
+.banner > p{
+    font:300 1.4vmax "Lucida Sans";
+}
+.banner > a > button {
+    margin-bottom:5vmax;
+    cursor:pointer;
+    background-color: #FDFFFC;
+    border:1 px solid #FDFFFC;
+    border-radius: 0vmax;
+    padding:1vmax;
+    transition: all 0.5s;
+    width :9vmax;
+    font:500 1vmax "Roboto";
+}
+.banner > a > button:hover {
+    background-color : #0A0903;
+    color:#FDFFFC;
+} 
+.banner::after{
+    content:"";
+    width:100vw;
+    height:100vmin;
+    background-color:#FDFFFC;
+    position:absolute;
+    top:0%;
+    left:0%;
+    clip-path: polygon(100% 79%, 0% 100%, 100% 100%);
+    max-width:100%;
+} */
+
+.banner {
+  background-image: linear-gradient(to right, #F0652D,#F25918);
+  height: 100vmin;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FDFFFC;
+  position: relative;
+  padding: 0 5vmax;
+}
+
+.bannerContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 2;
+  text-align: center;
+  border-width: 2vmax;
+  border-color: #0A0903;
+  padding-left: 5vmax;
+}
+
+.bannerContent h1 {
+  font: 600 2.5vmax "Roboto";
+  margin: 1vmax 0;
+}
+
+.bannerContent p {
+  font: 300 1.4vmax "Lucida Sans";
+}
+
+/* .bannerContent a > button {
+  margin-top: 2vmax;
+  cursor: pointer;
+  background-color: #FDFFFC;
+  border: 1px solid #FDFFFC;
+  padding: 1vmax 2vmax;
+  transition: all 0.5s;
+  font: 500 1vmax "Roboto";
+}
+
+.bannerContent a > button:hover {
+  background-color: #0A0903;
+  color: #FDFFFC;
+} */
+
+.bannerImage img {
+    width: 100vmax;
+  max-width: 100%;
+  position: relative;
+  z-index: 1;
+  /* animation: float 4s ease-in-out infinite; */
+  align-self: center;
+  border-radius: 1vmax;
+  /* padding-left: vmax; */
+  margin-left: 5vmax;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* triangle bottom */
+.banner::after {
+  content: "";
+  width: 100vw;
+  height: 100vmin;
+  background-image: linear-gradient(to bottom, #F25918,#FDFFFC);
+  background-color: #0A0903;
+ position: absolute;
+  top: 0%;
+  left: 0%;
+  clip-path: polygon(100% 79%, 0% 100%, 100% 100%);
+  max-width: 100%;
+  z-index: 0;
+}
+
+.homeHeading {
+  text-align: center;
+  font-family: Roboto;
+  font-size: 1.4vmax;
+  border-bottom: 1px solid #0A0903;
+  width: 20vmax;
+  padding: 1vmax;
+  margin: 5vmax auto;
+  color: #0A0903;
+  /* background-color: ; */
+}
+.container {
+  display: flex;
+  margin: 2vmax auto;
+  width: 80vw;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+  /* background-color:; */
+}
+.productCard {
+  width: 14vmax;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color:#0A0903;
+  margin: 2vmax;
+  transition: all 0.5s;
+  padding-bottom: 0.5vmax;
+}
+
+.productCard > img {
+  width: 14vmax;
+}
+
+.productCard > div {
+  margin: 0.5vmax;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.productCardSpan {
+  margin: 0.5vmax;
+  font: 300 0.7vmax "Roboto";
+}
+
+.productCard > p {
+  font-family: "Roboto";
+  font-size: 1.2vmax;
+  margin: 1vmax 0.5vmax;
+  margin-bottom: 0;
+}
+
+.productCard > span {
+  margin: 0.5vmax;
+  color: tomato;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 1vmax;
+}
+
+.productCard:hover {
+  box-shadow: 0 0 5px #0A0903;
+
+  transform: translateY(-1vmax);
+}
+
+@media screen and (max-width: 600px) {
+  .productCard > p {
+    font-size: 1.7vmax;
+  }
+
+  .productCard > div {
+    margin: 0vmax;
+    display: block;
+  }
+
+  .productCard > span {
+    font-size: 1.5vmax;
+  }
+
+  .productCard > div > span {
+    margin: 0 0.5vmax;
+    font: 300 1vmax "Roboto";
+  }
+}
