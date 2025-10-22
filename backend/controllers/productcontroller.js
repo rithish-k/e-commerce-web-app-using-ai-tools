@@ -16,13 +16,14 @@ exports.createProduct = catchAsyncErrors(async (req,res,next)=>{
 });
 //Get ALL Products
 exports.getAllProducts= catchAsyncErrors(async (req,res)=>{
-    const resultPerpage = 5;
+    const resultPerpage = 8;
     const productCount = await Product.countDocuments();
     const apiFeature = new ApiFeatures(Product.find(),req.query).search().filter().pagination(resultPerpage);
     const products = await apiFeature.query;
     res.status(200).json({
         success:true,
         products,
+        productCount,
     })
 });
 //update product --admin
@@ -61,7 +62,6 @@ exports.getProductdetails = catchAsyncErrors(async(req,res,next)=>{
     res.status(200).json({
         success:true,
         product,
-        productCount
     })
 });
 

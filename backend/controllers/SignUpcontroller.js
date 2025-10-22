@@ -3,7 +3,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const signupModel = require('../models/signup');
 const sendToken = require("../utils/jwttoken");
 const sendEmail = require("../utils/sendEmail");
-const crypto = require("crypto")
+const crypto = require("crypto");
 
 
 

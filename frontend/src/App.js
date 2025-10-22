@@ -9,6 +9,8 @@ import Header from './components/layout/Header.js'
 import Footer from './components/layout/Footer.js'
 // import Home from ''
 import Home from './components/layout/Home/Home.js'
+import Loader from './components/layout/Loader/Loader.js';
+import { Toaster } from "react-hot-toast";
 function App() {
   // React.useEffect(()=>{
   // WebFont.load({
@@ -25,6 +27,7 @@ function App() {
         <Route path="/" element={<Home />} />
         </Routes>
         <Footer/>
+        <Toaster position='top-right'/>
     </Router>
   
     // <BrowserRouter>
