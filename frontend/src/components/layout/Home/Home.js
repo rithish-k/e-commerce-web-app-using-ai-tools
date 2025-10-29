@@ -3,9 +3,9 @@ import {CgMouse} from "react-icons/cg"
 import './Home.css'
 import './Button.css'
 import womanImage from "../../../assets/home.png";
-import Product from "./Product.js"
+import ProductCard from "./ProductCard.js"
 import MetaData from "../MetaData.js"
-import {getProduct} from "../../../actions/productAction";
+import {clearErrors, getProduct} from "../../../actions/productAction";
 import {useSelector,useDispatch} from "react-redux";
 import Loader from '../Loader/Loader.js';
 import toast from 'react-hot-toast';
@@ -15,6 +15,7 @@ function Home() {
   useEffect(() => {
     if(error){
       toast.error(error);
+      dispatch(clearErrors());
     }
     dispatch(getProduct());
 
@@ -43,7 +44,7 @@ function Home() {
 
           <h2 className='homeHeading' id="products">Featured products</h2>
           <div className="container" id="container">
-            {products && products.map((product)=> <Product product={product}/>)}
+            {products && products.map((product)=> <ProductCard product={product}/>)}
           </div>
       </Fragment>
       )}

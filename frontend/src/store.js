@@ -7,8 +7,7 @@ import { productDetailsReducer, productReducer } from "./reducers/productReducer
 
 const rootReducer = combineReducers({
   products: productReducer,
-  productDetails:productDetailsReducer
-
+  productDetails: productDetailsReducer,
 });
 
 const store = configureStore({
