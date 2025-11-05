@@ -33,10 +33,19 @@ class ApiFeatures {
         let queryStr = JSON.stringify(querycopy);
         // queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g,(key) => `$${key}`);
         queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
-        // console.log("FINAL FILTER:", JSON.parse(queryStr));
+        console.log("FINAL FILTER:", JSON.parse(queryStr));
+        const parsed = JSON.parse(queryStr);
 
-        // console.debug(querycopy);
-        this.query = this.query.find(JSON.parse(queryStr));
+        for (let field in parsed) {
+            if (typeof parsed[field] === "object") {
+                for (let op in parsed[field]) {
+                    parsed[field][op] = Number(parsed[field][op]);
+                }
+            }
+        }
+
+
+        this.query = this.query.find(parsed);
         // console.debug(queryStr);
         return this;
     }

@@ -24,7 +24,6 @@ const Products = () => {
     const [price,setPrice] = useState([0,25000]);
     const [category,setCategory] = useState("");
     const {products,loading,error,productsCount,resultPerPage} = useSelector((state)=>state.products);
-    //rating bug will work on it on next commit
     const [rating,setRatings] = useState(0);
     const {keyword} = useParams();
     //need to add a pagination with price ( current pagination will show even when price filter is present)too many bugs will do later
