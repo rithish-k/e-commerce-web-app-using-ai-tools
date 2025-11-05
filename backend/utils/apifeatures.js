@@ -16,17 +16,28 @@ class ApiFeatures {
     }
     filter(){
         const querycopy = {...this.queryStr}
-        console.debug(querycopy);
+        // console.debug(querycopy);
         //remove some field for category
         const removeFields = ["keyword","page","limit"];
         removeFields.forEach(key=>delete querycopy[key]);
-        console.debug(querycopy);
+        for (let key in querycopy) {
+            if (key.includes("[")) {
+                const [field, operator] = key.split(/\[|\]/).filter(Boolean);
+                querycopy[field] = querycopy[field] || {};
+                querycopy[field][operator] = querycopy[key];
+                delete querycopy[key];
+            }
+        }
+        // console.debug(querycopy);
         //filter for price and rating range
         let queryStr = JSON.stringify(querycopy);
-        queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g,key => `$${key}`);
-        console.debug(querycopy);
+        // queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g,(key) => `$${key}`);
+        queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
+        // console.log("FINAL FILTER:", JSON.parse(queryStr));
+
+        // console.debug(querycopy);
         this.query = this.query.find(JSON.parse(queryStr));
-        console.debug(queryStr);
+        // console.debug(queryStr);
         return this;
     }
     pagination(resultPerpage){

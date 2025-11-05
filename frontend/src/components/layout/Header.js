@@ -21,6 +21,9 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useNavigate } from "react-router-dom";
+
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -55,6 +58,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Header = () => {
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (e) => {
+    if (e.key === "Enter") {
+      if (keyword.trim()) {
+        navigate(`/products/${keyword}`);
+      } else {
+        navigate("/products");
+      }
+    }
+  };
+
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (value) => () => {
@@ -140,7 +156,13 @@ const Header = () => {
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
-              <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                onKeyDown={handleSearchSubmit}  // ✅ ENTER triggers search
+              />
             </Search>
           </Box>
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom"
-import { Rating } from "react-simple-star-rating";
-// import 
+import { Rating } from "react-simple-star-rating"; 
 
 
 const ProductCard = ({product}) => {
