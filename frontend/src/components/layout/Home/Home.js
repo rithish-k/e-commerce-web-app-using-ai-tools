@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useEffectEvent } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import {CgMouse} from "react-icons/cg" 
 import './Home.css'
 import './Button.css'
@@ -11,7 +11,7 @@ import Loader from '../Loader/Loader.js';
 import toast from 'react-hot-toast';
 function Home() {
   const dispatch = useDispatch();
-  const {loading,error,products,productCount} = useSelector((state)=>state.products);
+  const {loading,error,products} = useSelector((state)=>state.products);
   useEffect(() => {
     if(error){
       toast.error(error);
@@ -19,7 +19,7 @@ function Home() {
     }
     dispatch(getProduct());
 
-  }, [dispatch,error]);
+  }, [dispatch,error,toast]);
   
 
   return (

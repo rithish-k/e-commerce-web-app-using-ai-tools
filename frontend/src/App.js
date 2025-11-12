@@ -14,7 +14,9 @@ import { Toaster } from "react-hot-toast";
 import ProductDetails from './components/layout/Product/ProductDetails.js';
 import Products from './components/layout/Product/Products.js';
 import About from './components/layout/About/About.js';
+import LoginSignUp from './components/User/LoginSignUp.js';
 import "./App.css";
+
 function App() {
   // React.useEffect(()=>{
   // WebFont.load({
@@ -33,6 +35,7 @@ function App() {
         <Route path="/products" element={<Products/>}/>
         <Route path="/products/:keyword" element={<Products/>}/>
         <Route path="/about" element={<About/>}/>
+        <Route path ="/login" element={<LoginSignUp/>}/>
         </Routes>
         <Footer/>
         <Toaster position='top-right'/>

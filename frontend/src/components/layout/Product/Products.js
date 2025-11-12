@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 import Pagination from "@mui/material/Pagination";
 import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
+import toast from 'react-hot-toast';
+import MetaData from '../MetaData.js';
 
 const categories = [
     "Electronics",
@@ -37,10 +39,14 @@ const Products = () => {
     }
 
     useEffect(() => {
+        if(error){
+            toast.error(error);
+            dispatch(clearErrors());
+        }
         dispatch(getProduct(keyword,currentPage,price,category,rating));
 
 
-    }, [dispatch,keyword,currentPage,price,category,rating]);
+    }, [dispatch,keyword,currentPage,price,category,rating,toast,error]);
     const safeProductsCount = Number(productsCount) || 0;
     const safeResultPerPage = Number(resultPerPage) || 1;
 
@@ -52,6 +58,7 @@ const Products = () => {
     <Fragment>
         {loading ? (<Loader/>) :(
             <Fragment>
+                <MetaData title="Products"/>
                 <h2 className='productsHeading'>Products</h2>
                 <div className='products'>
                     {products &&

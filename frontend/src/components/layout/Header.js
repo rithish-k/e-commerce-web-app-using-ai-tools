@@ -161,19 +161,21 @@ const Header = () => {
                 inputProps={{ "aria-label": "search" }}
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                onKeyDown={handleSearchSubmit}  // ✅ ENTER triggers search
+                onKeyDown={handleSearchSubmit}
               />
             </Search>
           </Box>
 
           {/* 🛒 Cart & 👤 Profile Icons */}
           <Box sx={{ display: { xs: "none", md: "flex" }, ml: 2, gap: 1 }}>
+            {/* cart */}
             <IconButton color="inherit" component={Link} to="/cart">
               <Badge badgeContent={2} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
-            <IconButton color="inherit" component={Link} to="/profile">
+            {/* login */}
+            <IconButton color="inherit" component={Link} to="/login">
               <AccountCircleIcon />
             </IconButton>
           </Box>

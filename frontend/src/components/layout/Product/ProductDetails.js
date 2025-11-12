@@ -8,6 +8,7 @@ import "./ProductDetails.css"
 import ReviewCard from "./ReviewCard.js";
 import Loader from '../Loader/Loader.js';
 import toast from 'react-hot-toast';
+import MetaData from '../MetaData.js';
 const ProductDetails = ({}) => {
     const {id} = useParams();
     const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const options = {
     <Fragment>
         {loading ? (<Loader/>) : 
         (<Fragment>
+        <MetaData title={`${product.name}`}/>
         <div className="ProductDetails">
             <div>
                 {product.images && product.images.length>0 && (
