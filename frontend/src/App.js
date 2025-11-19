@@ -15,7 +15,10 @@ import ProductDetails from './components/layout/Product/ProductDetails.js';
 import Products from './components/layout/Product/Products.js';
 import About from './components/layout/About/About.js';
 import LoginSignUp from './components/User/LoginSignUp.js';
+import store from "./store.js"
 import "./App.css";
+import { useEffect } from 'react';
+import { loadUser } from './actions/userAction.js';
 
 function App() {
   // React.useEffect(()=>{
@@ -26,6 +29,11 @@ function App() {
   //   })
 
   // },[]);
+// useEffect(()=>{
+
+//     // store.dispatch(loadUser());
+
+//   },[]);
   return (
     <Router>
         <Header/>

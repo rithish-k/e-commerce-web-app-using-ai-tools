@@ -5,17 +5,34 @@ const sendToken = require("../utils/jwttoken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 
-
+const cloudinary = require("cloudinary");
 
 // require('dotenv').config();
 exports.registerUser = catchAsyncErrors( async(req,res,next)=>{
+    //yet to complete the avatar cloudinary
+    if (!req.files || !req.files.avatar) {
+        return next(new ErrorHandler("Avatar image is required", 400));
+    }
+
+    const file = req.files.avatar;
+
+    const myCloud = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+    });
+    // const myCloud =await cloudinary.v2.uploader.upload(req.body.avatar,{
+    //     folder:"avatars",
+    //     width:150,
+    //     crop:"scale",
+    // });
     // console.log("REQ BODY:", req.body);
-    const {name,email,password,role}=req.body;
+    const {name,email,password}=req.body;
     const user = await signupModel.create({
         name,email,password,
         avatar:{
-            public_id:"This is a sample id",
-            url:"ProfilePicUrl"
+            public_id:myCloud.public_id,
+            url:myCloud.secure_url,
         },
         role
     })
