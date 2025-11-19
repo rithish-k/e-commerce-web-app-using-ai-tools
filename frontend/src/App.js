@@ -29,11 +29,11 @@ function App() {
   //   })
 
   // },[]);
-// useEffect(()=>{
+useEffect(()=>{
 
-//     // store.dispatch(loadUser());
+    store.dispatch(loadUser());
 
-//   },[]);
+  },[]);
   return (
     <Router>
         <Header/>
