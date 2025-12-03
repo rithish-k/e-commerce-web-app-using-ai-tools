@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 // import {thunk} from "redux-thunk";
 import { productDetailsReducer, productReducer } from "./reducers/productReducer";
-import {userReducer} from "./reducers/userReducer";
+import {profileReducer, userReducer} from "./reducers/userReducer";
 
 // Import your reducers here
 // import productReducer from "./reducers/productReducer";
@@ -10,6 +10,7 @@ const rootReducer = combineReducers({
   products: productReducer,
   productDetails: productDetailsReducer,
   user:userReducer,
+  profile:profileReducer,
 });
 
 const store = configureStore({

@@ -45,20 +45,12 @@ const LoginSignUp = () => {
     const registerDataChange = (e) =>{
         if(e.target.name === "avatar"){
             const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload=()=>{
-                if(reader.readyState===2){
-                    SetAvatarPreview(reader.result);
-                    // setAvatar(reader.result);
-                }
-                reader.readAsDataURL(file);
-
-                setAvatar(file); 
-            };
-
-        }else{
-            setUser({...user,[e.target.name]:e.target.value});
-        }
+            // const reader = new FileReader();
+            SetAvatarPreview(URL.createObjectURL(file)); // preview
+            setAvatar(file); // FILE object — perfect ✔
+        } else {
+                setUser({ ...user, [e.target.name]: e.target.value });
+            }
     }
     useEffect(()=>{
         if(error){

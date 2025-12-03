@@ -1,6 +1,8 @@
 const express = require('express');
 const {loginUser, registerUser, logout, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, getAllUser, getSingleUser, updateUserRole, deleteUser,} = require("../controllers/SignUpcontroller")
 const {isAuthenticatedUser, authorizeRoles,} =require("../middleware/auth")
+
+
 // require('dotenv').config();
 const router = express.Router()
 router.route("/login").post(loginUser);

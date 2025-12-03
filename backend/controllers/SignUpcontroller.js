@@ -9,10 +9,6 @@ const cloudinary = require("cloudinary");
 
 // require('dotenv').config();
 exports.registerUser = catchAsyncErrors( async(req,res,next)=>{
-    //yet to complete the avatar cloudinary
-    if (!req.files || !req.files.avatar) {
-        return next(new ErrorHandler("Avatar image is required", 400));
-    }
 
     const file = req.files.avatar;
 
@@ -21,12 +17,6 @@ exports.registerUser = catchAsyncErrors( async(req,res,next)=>{
         width: 150,
         crop: "scale",
     });
-    // const myCloud =await cloudinary.v2.uploader.upload(req.body.avatar,{
-    //     folder:"avatars",
-    //     width:150,
-    //     crop:"scale",
-    // });
-    // console.log("REQ BODY:", req.body);
     const {name,email,password}=req.body;
     const user = await signupModel.create({
         name,email,password,
@@ -34,7 +24,7 @@ exports.registerUser = catchAsyncErrors( async(req,res,next)=>{
             public_id:myCloud.public_id,
             url:myCloud.secure_url,
         },
-        role
+        // role
     })
     sendToken(user,201,res);
 });

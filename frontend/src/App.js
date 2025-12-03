@@ -15,11 +15,15 @@ import ProductDetails from './components/layout/Product/ProductDetails.js';
 import Products from './components/layout/Product/Products.js';
 import About from './components/layout/About/About.js';
 import LoginSignUp from './components/User/LoginSignUp.js';
-import store from "./store.js"
+import Profile from './components/User/Profile.js';
+import store from "./store.js";
 import "./App.css";
 import { useEffect } from 'react';
 import { loadUser } from './actions/userAction.js';
-
+import UserOptions from './components/layout/UserOptions/UserOptions.js'
+import { useSelector } from 'react-redux';
+import ProtectedRoute from './components/layout/Route/ProtectedRoute.js';
+import UpdateProfile from './components/User/UpdateProfile.js';
 function App() {
   // React.useEffect(()=>{
   // WebFont.load({
@@ -29,20 +33,29 @@ function App() {
   //   })
 
   // },[]);
-useEffect(()=>{
+  const {isAuthenticated,user} = useSelector((state)=>state.user);
+  useEffect(()=>{
 
     store.dispatch(loadUser());
 
   },[]);
+
   return (
     <Router>
         <Header/>
+        {isAuthenticated && <UserOptions user = {user}/>}
         <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetails/>}/>
         <Route path="/products" element={<Products/>}/>
         <Route path="/products/:keyword" element={<Products/>}/>
         <Route path="/about" element={<About/>}/>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/account" element={<Profile />} />
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/me/update" element={<UpdateProfile />} />
+        </Route>
         <Route path ="/login" element={<LoginSignUp/>}/>
         </Routes>
         <Footer/>

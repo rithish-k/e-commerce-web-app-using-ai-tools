@@ -9,8 +9,12 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(fileUpload());
-//routes imports
+app.use(
+    fileUpload({
+        useTempFiles: true,
+        tempFileDir: "/tmp/",
+    })
+);
 
 const product = require("./routes/productRoute");
 app.use("/api/v1/pro",product);
