@@ -24,6 +24,8 @@ import UserOptions from './components/layout/UserOptions/UserOptions.js'
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/layout/Route/ProtectedRoute.js';
 import UpdateProfile from './components/User/UpdateProfile.js';
+import UpdatePassword from './components/User/UpdatePassword.js';
+import ForgotPassword from './components/User/ForgotPassword.js';
 function App() {
   // React.useEffect(()=>{
   // WebFont.load({
@@ -56,6 +58,10 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/me/update" element={<UpdateProfile />} />
         </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/password/update" element={<UpdatePassword />} />
+        </Route>
+        <Route path="/password/forgot" element={<ForgotPassword />} />
         <Route path ="/login" element={<LoginSignUp/>}/>
         </Routes>
         <Footer/>

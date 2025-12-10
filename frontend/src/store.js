@@ -1,7 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 // import {thunk} from "redux-thunk";
 import { productDetailsReducer, productReducer } from "./reducers/productReducer";
-import {profileReducer, userReducer} from "./reducers/userReducer";
+import {forgotPasswordReducer, profileReducer, userReducer} from "./reducers/userReducer";
 
 // Import your reducers here
 // import productReducer from "./reducers/productReducer";
@@ -11,6 +11,7 @@ const rootReducer = combineReducers({
   productDetails: productDetailsReducer,
   user:userReducer,
   profile:profileReducer,
+  forgotPassword:forgotPasswordReducer,
 });
 
 const store = configureStore({

@@ -1,7 +1,6 @@
-import React, { Fragment ,useRef,useState,useEffect} from 'react'
+import React, { Fragment ,useState,useEffect} from 'react'
 import "./UpdateProfile.css"
 import Loader from "../layout/Loader/Loader";
-import {Link} from "react-router-dom";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import FaceIcon from "@mui/icons-material/Face";
 import Profile from "../../assets/profile.jpg";
@@ -9,31 +8,38 @@ import {useDispatch,useSelector} from "react-redux";
 import {clearErrors,updateProfile,loadUser} from "../../actions/userAction";
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
-
+import { UPDATE_PROFILE_RESET } from '../../constants/userConstants';
+import MetaData from "../layout/MetaData";
 const UpdateProfile = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const {user} =useSelector((state)=>state.user);
     const {error,isUpdated,loading} = useSelector((state)=>state.profile);
-    const [name,setName] = useState(user.name);
-    const [email,setEmail] = useState(user.email);
+    const [name,setName] = useState("");
+    const [email,setEmail] = useState("");
     const [avatar,setAvatar] = useState();
     const[avatarPreview,SetAvatarPreview] = useState(Profile);
 
-    const registerSubmit =(e)=>{
+    const updateProfileSubmit =(e)=>{
         e.preventDefault();
         const myForm = new FormData();
         myForm.set("name",name);
         myForm.set("email",email);
         myForm.append("avatar",avatar);
-        dispatch(register(myForm));
+        dispatch(updateProfile(myForm));
     }
-    const registerDataChange = (e) =>{
+    const updateProfileDataChange = (e) =>{
             const file = e.target.files[0];
             // const reader = new FileReader();
-            SetAvatarPreview(URL.createObjectURL(file)); // preview
-            setAvatar(file); // FILE object — perfect ✔
+            SetAvatarPreview(URL.createObjectURL(file)); 
+            setAvatar(file); 
     }
     useEffect(()=>{
+        if(user){
+            setName(user.name);
+            setEmail(user.email);
+            SetAvatarPreview(user.avatar.url);
+        }
         if(error){
             toast.error(error);
             dispatch(clearErrors());
@@ -47,10 +53,66 @@ const UpdateProfile = () => {
             })
 
         }
-    },[dispatch,error,isAuthenticated,navigate]);
+    },[dispatch,error,user,navigate,isUpdated]);
     
   return (
-    <div></div>
+    <Fragment>
+        {loading?<Loader/>:    
+    <Fragment>
+        <MetaData title="UpdateProfile"/>
+        <div className ='updateProfileContainer'>
+            <div className='updateProfileBox'>
+                <h2 className='updateProfileHeading'>Update Profile</h2>
+                <form
+                    className="updateProfileForm"
+                    encType="multipart/form-data"
+                    onSubmit={updateProfileSubmit}
+                >
+                            <div className='updateProfileName'>
+                                <FaceIcon/>
+                                <input
+                                name="name"
+                                type="text"
+                                placeholder='Name'
+                                required
+                                value={name}
+                                onChange={(e)=>setName(e.target.value)}
+                                />
+
+                            </div>
+                            <div className='updateProfileEmail'>
+                                <MailOutlineIcon/>
+                                <input
+                                name='email'
+                                type="email"
+                                placeholder='Email'
+                                required
+                                value={email}
+                                onChange={(e)=>setEmail(e.target.value)}
+                                />
+                            </div>
+                            <div id="updateProfileImage">
+                                <img src={avatarPreview} alt="Avatar Preview"/>
+                                <input
+                                name='avatar'
+                                type="file"
+                                placeholder='avatar'
+                                accept="image/*"
+                                onChange={updateProfileDataChange}
+                                />
+                            </div>
+                            <input
+                                type="submit"
+                                value='update'
+                                className='updateProfileBtn'
+                                // disabled={loading?true:false}
+                            />
+
+                </form>
+            </div>
+        </div>
+    </Fragment>}
+    </Fragment>
   )
 }
 

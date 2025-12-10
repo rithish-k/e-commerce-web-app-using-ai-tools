@@ -46,8 +46,8 @@ const LoginSignUp = () => {
         if(e.target.name === "avatar"){
             const file = e.target.files[0];
             // const reader = new FileReader();
-            SetAvatarPreview(URL.createObjectURL(file)); // preview
-            setAvatar(file); // FILE object — perfect ✔
+            SetAvatarPreview(URL.createObjectURL(file)); 
+            setAvatar(file); 
         } else {
                 setUser({ ...user, [e.target.name]: e.target.value });
             }
@@ -118,7 +118,7 @@ const LoginSignUp = () => {
                                 />
 
                             </div>
-                            <Link to="/Password/forget">Forget Password ?</Link>
+                            <Link to="/password/forgot">Forget Password ?</Link>
                             <input type="submit" value="Login" className="loginBtn"/>
                         </form>
                         <form
@@ -173,9 +173,9 @@ const LoginSignUp = () => {
                             </div>
                             <input
                                 type="submit"
-                                placeholder='Register'
+                                value='Register'
                                 className='signUpBtn'
-                                value={loginEmail}
+                                // value={loginEmail}
                                 // disabled={loading?true:false}
                             />
 
