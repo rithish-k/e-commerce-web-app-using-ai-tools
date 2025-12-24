@@ -1,0 +1,57 @@
+
+.aboutBanner{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  padding:4vmax 6vmax;
+  background: linear-gradient(90deg,#F0652D,#F25918);
+  color: #FDFFFC;
+  border-radius: 1vmax;
+  margin: 2vmax;
+}
+.aboutContent{
+  flex:1 1 40vmax;
+  min-width: 280px;
+}
+.aboutContent h1{
+  font: 700 2.2vmax "Roboto";
+  margin: 0 0 1vmax 0;
+}
+.aboutContent p{
+  font: 300 1.1vmax "Lucida Sans";
+  margin-bottom: 1.6vmax;
+}
+.aboutList{
+  margin: 0 0 1.6vmax 1.2vmax;
+  list-style: disc;
+  color: #FDFFFC;
+}
+.aboutCta{
+  display:inline-block;
+  margin-top: 1vmax;
+  padding: 0.8vmax 1.4vmax;
+  background: #FDFFFC;
+  color:#0A0903;
+  text-decoration:none;
+  border-radius: 0.6vmax;
+  font-weight:500;
+}
+.aboutImage{
+  flex:1 1 30vmax;
+  min-height: 18vmax;
+  background-image: url("../../../assets/home.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 1vmax;
+  margin-left: 2vmax;
+}
+.aboutTeam{
+  padding: 2vmax 6vmax;
+  text-align:center;
+  color: #262626;
+}
+@media screen and (max-width: 800px){
+  .aboutBanner{padding:3vmax;}
+  .aboutImage{width:100%; margin: 2vmax 0 0 0;}
+}

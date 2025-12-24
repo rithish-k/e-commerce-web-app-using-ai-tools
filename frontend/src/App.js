@@ -26,6 +26,7 @@ import ProtectedRoute from './components/layout/Route/ProtectedRoute.js';
 import UpdateProfile from './components/User/UpdateProfile.js';
 import UpdatePassword from './components/User/UpdatePassword.js';
 import ForgotPassword from './components/User/ForgotPassword.js';
+import ResetPassword from './components/User/ForgotPassword.js';
 function App() {
   // React.useEffect(()=>{
   // WebFont.load({
@@ -62,6 +63,7 @@ function App() {
           <Route path="/password/update" element={<UpdatePassword />} />
         </Route>
         <Route path="/password/forgot" element={<ForgotPassword />} />
+        <Route path="/password/reset/:token" element={<ResetPassword />} />
         <Route path ="/login" element={<LoginSignUp/>}/>
         </Routes>
         <Footer/>
