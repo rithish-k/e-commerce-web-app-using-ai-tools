@@ -61,6 +61,7 @@ signupSchema.methods.getJWTToken = function () {
     });
 };
 
+
 signupSchema.methods.comparePassword = async function(enterdPassword){
     return await bcrypt.compare(enterdPassword,this.password);
 }
@@ -71,8 +72,6 @@ signupSchema.methods.getResetPasswordToken = function(){
 
     this.resetPasswordExpire=Date.now()+15*60*1000;
     return resetToken;
-
-
 }
 const signupModel = mongoose.model("signupinfo",signupSchema)
 module.exports = signupModel

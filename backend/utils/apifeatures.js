@@ -33,7 +33,7 @@ class ApiFeatures {
         let queryStr = JSON.stringify(querycopy);
         // queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g,(key) => `$${key}`);
         queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
-        console.log("FINAL FILTER:", JSON.parse(queryStr));
+        // console.log("FINAL FILTER:", JSON.parse(queryStr));
         const parsed = JSON.parse(queryStr);
 
         for (let field in parsed) {

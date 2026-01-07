@@ -150,7 +150,7 @@ export const resetPassword = (token,passwords) => async (dispatch) =>{
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({passwords})
+            body: JSON.stringify(passwords)
         });
         const data = await res.json();
         if (!res.ok) {

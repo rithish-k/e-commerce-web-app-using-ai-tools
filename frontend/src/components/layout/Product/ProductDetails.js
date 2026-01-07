@@ -9,6 +9,7 @@ import ReviewCard from "./ReviewCard.js";
 import Loader from '../Loader/Loader.js';
 import toast from 'react-hot-toast';
 import MetaData from '../MetaData.js';
+import {addItemsToCart} from "../../../actions/cartAction.js";
 const ProductDetails = ({}) => {
     const {id} = useParams();
     const dispatch = useDispatch();
@@ -27,7 +28,23 @@ const options = {
     allowFraction: true,
     fillColor: "tomato",
     emptyColor: "rgba(20,20,20,0.1)"
-  };    
+  };
+const [quantity,setQuantity] = useState(1);
+const increaseQuantity = () =>{
+    if(product.stock <= quantity) return;
+    const qty = quantity+1;
+    setQuantity(qty);
+};
+const decreaseQuantity = ()=>{
+    if(1>= quantity) return;
+    const qty = quantity-1;
+    setQuantity(qty);
+}
+const addToCartHandler = ()=>{
+    dispatch(addItemsToCart(id,quantity));
+    toast.success("Items Added To Cart");
+}
+
   return (
     <Fragment>
         {loading ? (<Loader/>) : 
@@ -63,15 +80,15 @@ const options = {
                     <div className='detailsBlock-3-1'>
 
                         <div className='detailsBlock-3-1-1'>
-                            <button>-</button>
-                            <input value="1" type='number'/>
-                            <button>+</button>
+                            <button onClick={decreaseQuantity}>-</button>
+                            <input id="quantity" type="number" value={quantity} readOnly/>
+                            <button onClick={increaseQuantity}>+</button>
                         </div>{' '}
 
-                        <button>Add to Cart</button>
+                        <button onClick={addToCartHandler}>Add to Cart</button>
                     </div>
 
-                    <p>
+                    <p> 
                         Status:{" "}
                         <b className={product.Stock<1 ? "redColor":"greenColor"}>
                             {product.Stock<1 ? "Out of Stock":"InStock"}

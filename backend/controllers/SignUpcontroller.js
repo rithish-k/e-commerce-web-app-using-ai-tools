@@ -70,10 +70,10 @@ exports.forgotPassword =catchAsyncErrors(async(req,res,next)=>{
     }
     const resetToken = user.getResetPasswordToken();
     await user.save({validateBeforeSave:false});
-    console.log("AFTER SAVE USER:", user);
-    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/signup/password/reset/${resetToken}`;
-    const message = `Your Password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it`;
-    console.log(message);
+    // console.log("AFTER SAVE USER:", user);
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+    const message = `Your Password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`;
+    // console.log(message);
     try{
         await sendEmail({
             email:user.email,
@@ -97,11 +97,12 @@ exports.forgotPassword =catchAsyncErrors(async(req,res,next)=>{
 })
 
 exports.resetPassword = catchAsyncErrors(async (req,res,next) =>{
+    console.log("REQ BODY:", req.body);
 
     //creating token hash
     const resetPasswordToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
-    console.log("URL Token (plain):", req.params.token);
-    console.log("URL Token (hashed):", resetPasswordToken);
+    // console.log("URL Token (plain):", req.params.token);
+    // console.log("URL Token (hashed):", resetPasswordToken);
 
 
     const user = await signupModel.findOne({
@@ -111,7 +112,7 @@ exports.resetPassword = catchAsyncErrors(async (req,res,next) =>{
 
     })
     // console.log("USER FOUND:", user);
-    console.log("DB user:", user);
+    // console.log("DB user:", user);
     if(!user){
         return next(new ErrorHandler("Reset password token is invalid or has been expired",404));
     }
