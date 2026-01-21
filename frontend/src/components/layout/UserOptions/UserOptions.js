@@ -9,18 +9,26 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Backdrop from '@mui/material/Backdrop';
 import { useNavigate } from "react-router-dom";
 import { logout } from '../../../actions/userAction';
-import {useDispatch} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
 import toast from 'react-hot-toast';
 
 import Profile from "../../../assets/profile.jpg";
 import { useState,Fragment } from 'react';
 const UserOptions = ({user}) => {
+    const {cartItems} = useSelector((state)=>state.cart);
     const [open,setOpen] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const options = [
         {icons:<ListAltIcon/>,name:"Orders", func:orders},
         {icons:<PersonIcon/>,name:"Profile", func:account},
+        {
+            icons:(
+                <ShoppingCartIcon style={{ color:cartItems.length > 0 ? "tomato":"unset"}} />
+            ),
+            name: `cart(${cartItems.length})`,
+            func:cart
+        },
         {icons:<ExitToAppIcon/>,name:"Logout", func:logoutUser},
     ];
     if(user.role === "admin"){
@@ -43,6 +51,9 @@ const UserOptions = ({user}) => {
         dispatch(logout());
         toast.success("logout succesfully")
     }
+    function cart(){
+        navigate(`/cart`);
+    }
   return (
     <Fragment>
         <Backdrop open={open} style={{zIndex:"10"}}/>
@@ -63,7 +74,7 @@ const UserOptions = ({user}) => {
         }
         >
             {options.map((items)=>(
-                <SpeedDialAction key={items.name} icon={items.icons} tooltipTitle = {items.name} onClick={items.func}/>
+                <SpeedDialAction key={items.name} icon={items.icons} tooltipTitle = {items.name} onClick={items.func} tooltipOpen={window.innerWidth <= 600 ? true : false}/>
             ))}
             
         </SpeedDial>

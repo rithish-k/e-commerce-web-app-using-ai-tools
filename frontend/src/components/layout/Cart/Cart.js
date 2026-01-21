@@ -6,8 +6,10 @@ import { addItemsToCart,removeItemsFromCart} from '../../../actions/cartAction';
 import { Typography } from '@mui/material';
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import {Link} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 const Cart = () => {
     const dispatch =useDispatch();
+    const navigate = useNavigate();
     const {cartItems} = useSelector((state)=>state.cart);
     const IncreaseQuantity = (id,quantity,stock)=>{
         const newQty = quantity+1;
@@ -26,6 +28,9 @@ const Cart = () => {
     const deleteCartItems = (id) =>{
         dispatch(removeItemsFromCart(id));
     }
+    const checkoutHandler = () => {
+    navigate("/login?redirect=shipping");
+    };
   return (
     <Fragment>
         {cartItems.length === 0?(
@@ -62,11 +67,16 @@ const Cart = () => {
                         <div></div>
                         <div className='cartGrossProfitBox'>
                             <p>Gross Total</p>
-                            <p>{'200'}</p>
+                            <p>
+                                {`₹${cartItems.reduce(
+                                (acc, item) => acc + item.quantity * item.price,
+                                0
+                                )}`}
+                            </p>
                         </div>
                         <div></div>
                         <div className='checkOutBtn'>
-                            <button>Check out</button>
+                            <button onClick={checkoutHandler}>Check Out</button>
                         </div>
                     </div>
                 </div>

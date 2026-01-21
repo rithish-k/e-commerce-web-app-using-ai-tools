@@ -9,10 +9,11 @@ import Profile from "../../assets/profile.jpg";
 import {useDispatch,useSelector} from "react-redux";
 import {clearErrors,login,register} from "../../actions/userAction";
 import toast from 'react-hot-toast';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 const LoginSignUp = () => {
     const {error,loading,isAuthenticated} =useSelector((state)=>state.user);
     const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useDispatch();
     const loginTab = useRef(null);
     const registerTab = useRef(null);
@@ -52,16 +53,17 @@ const LoginSignUp = () => {
                 setUser({ ...user, [e.target.name]: e.target.value });
             }
     }
+    const redirect = location.search ? location.search.split("=")[1] : "/account";
     useEffect(()=>{
         if(error){
             toast.error(error);
             dispatch(clearErrors());
         }
         if(isAuthenticated){
-            navigate(`/account`);
+            navigate(redirect);
 
         }
-    },[dispatch,error,isAuthenticated,navigate]);
+    },[dispatch,error,isAuthenticated,navigate,redirect]);
 
     const switchTabs =(e,tab)=>{
         if(tab==="login"){
