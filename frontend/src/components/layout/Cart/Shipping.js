@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import "./Shipping.css";
+import CheckoutSteps from './CheckoutSteps';
 import { useSelector, useDispatch } from "react-redux";
 import { saveShippingInfo } from "../../../actions/cartAction";
 import MetaData from "../../layout/MetaData";
@@ -23,10 +24,21 @@ const Shipping = () => {
     const [country, setCountry] = useState(shippingInfo.country);
     const [pinCode, setPinCode] = useState(shippingInfo.pinCode);
     const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
-    const shippingSubmit = (e) => {}
+    const shippingSubmit = (e) => {
+      e.preventDefault();
+      if (phoneNo.length < 10 || phoneNo.length > 10) {
+        toast.error("Phone Number should be 10 digits Long");
+        return;
+      }
+      dispatch(
+        saveShippingInfo({ address, city, state, country, pinCode, phoneNo })
+      );
+      navigate("/order/confirm");
+    }
   return (
     <Fragment>
       <MetaData title="Shipping Details" />
+      <CheckoutSteps activeStep={0} />
       <div className="shippingContainer">
         <div className="shippingBox">
           <h2 className="shippingHeading">Shipping Details</h2>
@@ -102,7 +114,6 @@ const Shipping = () => {
             {country && (
               <div>
                 <TransferWithinAStationIcon />
-
                 <select
                   required
                   value={state}

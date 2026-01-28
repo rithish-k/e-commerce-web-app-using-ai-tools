@@ -5,6 +5,7 @@ const errorMiddleware = require("./middleware/Error")
 const cookieParser = require("cookie-parser")
 const bodyParser = require("body-parser")
 const fileUpload = require("express-fileupload")
+const dotenv = require("dotenv");
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
@@ -23,6 +24,9 @@ app.use("/api/v1/signup",signup);
 const order = require("./routes/orderRoute");
 // const bodyParser = require("body-parser");
 app.use("/api/v1",order);
+const payment = require("./routes/paymentRoute");
+app.use("/api/v1",payment);
+
 
 app.use(errorMiddleware);
 

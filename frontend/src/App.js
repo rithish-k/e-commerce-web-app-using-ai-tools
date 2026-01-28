@@ -29,6 +29,8 @@ import ForgotPassword from './components/User/ForgotPassword.js';
 import ResetPassword from './components/User/ResetPassword.js';
 import Shipping from './components/layout/Cart/Shipping.js';
 import Cart from './components/layout/Cart/Cart.js';
+import ConfirmOrder from './components/layout/Cart/ConfirmOrder.js';
+
 function App() {
   // React.useEffect(()=>{
   // WebFont.load({
@@ -69,7 +71,10 @@ function App() {
         <Route path ="/login" element={<LoginSignUp/>}/>
         <Route path ="/cart" element={<Cart/>}/>
         <Route element={<ProtectedRoute />}>
-          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/login/shipping" element={<Shipping />} />
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/order/confirm" element={<ConfirmOrder />} />
         </Route>
         </Routes>
         <Footer/>
