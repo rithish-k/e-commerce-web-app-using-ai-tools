@@ -18,7 +18,7 @@ import LoginSignUp from './components/User/LoginSignUp.js';
 import Profile from './components/User/Profile.js';
 import store from "./store.js";
 import "./App.css";
-import { useEffect } from 'react';
+import { useEffect ,useState} from 'react';
 import { loadUser } from './actions/userAction.js';
 import UserOptions from './components/layout/UserOptions/UserOptions.js'
 import { useSelector } from 'react-redux';
@@ -30,7 +30,10 @@ import ResetPassword from './components/User/ResetPassword.js';
 import Shipping from './components/layout/Cart/Shipping.js';
 import Cart from './components/layout/Cart/Cart.js';
 import ConfirmOrder from './components/layout/Cart/ConfirmOrder.js';
-
+import Payment from './components/layout/Cart/Payment.js';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import OrderSuccess from "./components/layout/Cart/OrderSuccess.js"
 function App() {
   // React.useEffect(()=>{
   // WebFont.load({
@@ -40,12 +43,41 @@ function App() {
   //   })
 
   // },[]);
+  const StripeWrapper = ({ stripePromise }) => {
+    return (
+      <Elements stripe={stripePromise}>
+        <Payment />
+      </Elements>
+    );
+  };
+
   const {isAuthenticated,user} = useSelector((state)=>state.user);
+  const [stripeApiKey,setStripeApiKey] = useState("");
+  async function getStripeApiKey() {
+    try {
+      const response = await fetch("/api/v1/stripeapikey");
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setStripeApiKey(data.stripeApiKey);
+    } catch (error) {
+      console.error("Error fetching Stripe API key:", error);
+    }
+  }
+  const [stripePromise, setStripePromise] = useState(null);
   useEffect(()=>{
-
+    if (stripeApiKey) {
+      setStripePromise(loadStripe(stripeApiKey));
+    }
     store.dispatch(loadUser());
+    getStripeApiKey();
 
-  },[]);
+  },[stripeApiKey]);
+
+  // console.log("Stripe Key:", stripeApiKey);
 
   return (
     <Router>
@@ -75,6 +107,19 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="/order/confirm" element={<ConfirmOrder />} />
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route
+            path="/process/payment"
+            element={
+              stripePromise ? (
+                <StripeWrapper stripePromise={stripePromise} />
+              ) : null
+            }
+          />
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/success" element={<OrderSuccess />} />
         </Route>
         </Routes>
         <Footer/>
